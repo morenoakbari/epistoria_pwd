@@ -40,12 +40,11 @@
             <!-- Profile Dropdown (Di Pojok Kanan) -->
             <div class="relative ml-auto" x-data="{ open: false }">
                 <button @click="open = !open" class="focus:outline-none">
-                    <img src="{{ asset('images/jiro.jpeg') }}" alt="Profile" class="w-12 h-12 rounded-full object-cover">
+                    <img src="{{ Auth::user()->profile_picture ? asset('storage/' . Auth::user()->profile_picture) : 'https://via.placeholder.com/150' }}" alt="Profile Image" class="w-12 h-12 rounded-full object-cover">
                 </button>
 
                 <!-- Dropdown Menu -->
-                <div x-show="open" @click.away="open = false"
-                    class="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg overflow-hidden border">
+                <div x-show="open" @click.away="open = false" class="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg overflow-hidden border">
                     <a href="{{ route('profile') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
                         My Profile
                     </a>
@@ -83,9 +82,14 @@
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
             @forelse ($books as $book)
             <div class="bg-white p-4 flex flex-col items-center rounded-lg shadow-md hover-scale">
-                <img src="{{ $book->cover ? asset('storage/' . $book->cover) : 'https://via.placeholder.com/150' }}"
-                    class="h-60 w-auto object-cover rounded-md">
-                <div class="mt-3 font-semibold text-center text-lg">{{ $book->title }}</div>
+                <a href="{{ route('book.show', $book->id) }}">
+                    <img src="{{ asset('storage/' . $book->cover) }}" class="h-60 w-auto object-cover rounded-md">
+                </a>
+                <div class="mt-3 font-semibold text-center text-lg">
+                    <a href="{{ route('book.show', $book->id) }}" class="text-teal-700 hover:underline">
+                        {{ $book->title }}
+                    </a>
+                </div>
                 <p class="text-sm text-gray-600">Author: {{ $book->author }}</p>
             </div>
             @empty

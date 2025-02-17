@@ -8,14 +8,15 @@ use Illuminate\Support\Facades\Auth;
 
 class BookController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $books = Book::all();
         return response()->json(
             [
-                'success' =>true,
+                'success' => true,
                 'data' => $books
             ]
-            );
+        );
     }
 
     public function create()
@@ -31,12 +32,12 @@ class BookController extends Controller
             'content' => 'required|string',
             'cover' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-    
+
         $coverPath = null;
         if ($request->hasFile('cover')) {
             $coverPath = $request->file('cover')->store('covers', 'public');
         }
-    
+
         Book::create([
             'title' => $request->title,
             'author' => $request->author,
@@ -44,7 +45,19 @@ class BookController extends Controller
             'cover' => $coverPath,
             'user_id' => Auth::id(),
         ]);
-    
+
         return redirect()->route('profile')->with('success', 'Buku berhasil ditambahkan!');
     }
-}    
+
+    public function show($id)
+    {
+        $book = Book::findOrFail($id);
+        return view('books.show', compact('book'));
+    }
+
+    public function read($id)
+    {
+        $book = Book::findOrFail($id);
+        return view('books.read', compact('book'));
+    }
+}
