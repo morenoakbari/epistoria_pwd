@@ -26,7 +26,6 @@
             </div>
 
             <!-- Profile Dropdown (Di Pojok Kanan) -->
-            <!-- Profile Dropdown (Di Pojok Kanan) -->
             <div class="relative ml-auto" x-data="{ open: false }">
                 <button @click="open = !open" class="focus:outline-none">
                     <img src="{{ Auth::check() && Auth::user()->profile_picture ? asset('storage/' . Auth::user()->profile_picture) : 'https://via.placeholder.com/150' }}" alt="Profile Image" class="w-12 h-12 rounded-full object-cover">
