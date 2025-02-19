@@ -60,4 +60,15 @@ class BookController extends Controller
         $book = Book::findOrFail($id);
         return view('books.read', compact('book'));
     }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        $books = Book::where('title', 'like', "%{$query}%")
+                    ->orwhere('author', 'like', "%{$query}%")
+                    ->get();
+        
+        return view('home', compact('books', 'query'));
+    }
 }

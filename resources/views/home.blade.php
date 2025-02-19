@@ -31,10 +31,14 @@
 
             <!-- Search Bar (Di Tengah) -->
             <div class="absolute left-1/2 transform -translate-x-1/2 w-full max-w-md">
-                <div class="flex items-center bg-white rounded-full shadow-md px-4 py-2">
-                    <input type="text" placeholder="Search" class="w-full border-none focus:outline-none">
-                    <i class="fas fa-search text-gray-500 ml-2"></i>
-                </div>
+                <form action="{{ route('books.search') }}" method="GET">
+                    <div class="flex items-center bg-white rounded-full shadow-md px-4 py-2">
+                        <input type="text" name="query" placeholder="Search" class="w-full border-none focus:outline-none" value="{{ request('query') }}">
+                        <button type="submit">
+                            <i class="fas fa-search text-gray-500 ml-2"></i>
+                        </button>
+                    </div>
+                </form>
             </div>
 
             <!-- Profile Dropdown (Di Pojok Kanan) -->
@@ -97,8 +101,6 @@
             @endforelse
         </div>
     </div>
-
-
 </body>
 
 </html>
